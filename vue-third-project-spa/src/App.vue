@@ -7,18 +7,25 @@
 
   <div v-show="false">hide this content</div>
 
-  <page-viewer  
-    :page="pages[activePage]"></page-viewer>
-</template> <!-- ERR pages[] undefined z.B. >> v-if="pages.length > 0" >> ODER SIEHE PageViewer.vue, props: {...} -->
+  <!-- <page-viewer 
+    v-if="pages.length > 0" 
+    :page="pages[activePage]"
+  ></page-viewer> -->
+
+  <createPage :page-created="pageCreated"> </createPage>
+</template>
+<!-- ERR pages[] undefined z.B. >> v-if="pages.length > 0" >> ODER SIEHE PageViewer.vue, props: {...} -->
 
 <script>
 import Navbar from "./components/Navbar.vue";
 import PageViewer from "./components/PageViewer.vue";
+import CreatePage from "./components/CreatePage.vue";
 
 export default {
   components: {
     Navbar,
     PageViewer,
+    CreatePage,
   },
   created() {
     this.getPages();
@@ -35,6 +42,9 @@ export default {
       let data = await res.json();
 
       this.pages = data;
+    },
+    pageCreated(pageObj) {
+      console.log(pageObj);
     },
   },
 };
