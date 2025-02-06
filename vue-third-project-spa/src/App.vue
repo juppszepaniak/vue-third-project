@@ -12,7 +12,7 @@
     :page="pages[activePage]"
   ></page-viewer> -->
 
-  <createPage :page-created="pageCreated"> </createPage>
+  <createPage @page-created="pageCreated"> </createPage>
 </template>
 <!-- ERR pages[] undefined z.B. >> v-if="pages.length > 0" >> ODER SIEHE PageViewer.vue, props: {...} -->
 
@@ -44,7 +44,7 @@ export default {
       this.pages = data;
     },
     pageCreated(pageObj) {
-      console.log(pageObj);
+      this.pages.push(pageObj);
     },
   },
 };
