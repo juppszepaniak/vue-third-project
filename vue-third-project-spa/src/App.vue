@@ -1,18 +1,16 @@
 <template>
-  <navbar
-    :pages="pages"
-    :active-page="activePage"
-    :nav-link-click="(index) => (activePage = index)"
-  ></navbar>
+  <navbar :pages="pages" :active-page="activePage"></navbar>
 
-  <div v-show="false">hide this content</div>
+  <router-view></router-view>
 
-  <!-- <page-viewer 
+  <!-- <div v-show="false">hide this content</div>
+
+  <page-viewer 
     v-if="pages.length > 0" 
     :page="pages[activePage]"
-  ></page-viewer> -->
+  ></page-viewer>
 
-  <createPage @page-created="pageCreated"> </createPage>
+  <createPage @page-created="pageCreated"></createPage> -->
 </template>
 <!-- ERR pages[] undefined z.B. >> v-if="pages.length > 0" >> ODER SIEHE PageViewer.vue, props: {...} -->
 
@@ -29,6 +27,10 @@ export default {
   },
   created() {
     this.getPages();
+
+    this.$bus.$on("navbarLinkActived", (index) => {
+      this.activePage = index;
+    });
   },
   data() {
     return {
