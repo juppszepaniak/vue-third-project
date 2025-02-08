@@ -11,10 +11,17 @@
           :key="index"
           :page="page"
           :index="index"
-          :isActive="activePage === index"
-          @actived="$emit('actived')"
-        >
-        </navbar-link>
+        ></navbar-link>
+
+        <li>
+          <router-link
+            to="/pages"
+            class="nav-link"
+            active-class="active"
+            aria-current="page"
+            >Pages</router-link
+          >
+        </li>
       </ul>
       <form class="" d-flex>
         <button class="btn btn-primary" @click.prevent="changeTheme()">
@@ -32,18 +39,30 @@ export default {
   components: {
     NavbarLink,
   },
+  inject: ["$pages", "$bus"],
   created() {
     this.getThemeSetting();
+
+    this.pages = this.$pages.getAllPages();
+
+    this.$bus.$on("page-updated", () => {
+      this.pages = [...this.$pages.getAllPages()]; // ... - spread, otherwise pages arr never changes - NOT WORKING?!
+    });
+
+    
+    this.$bus.$on("page-create", () => {
+      this.pages = [...this.$pages.getAllPages()];
+    });
   },
   computed: {
     publishedPages() {
       return this.pages.filter((p) => p.published);
     },
   },
-  props: ["pages", "activePage"],
   data() {
     return {
       theme: "dark",
+      data: [],
     };
   },
   methods: {
