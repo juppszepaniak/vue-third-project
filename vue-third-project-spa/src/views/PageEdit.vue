@@ -41,7 +41,12 @@
         <button class="btn btn-primary me-2" @click.prevent="submit">
           Edit
         </button>
-        <button class="btn btn-secondary" @click.prevent="goToPagesList">Cancel</button>
+        <button class="btn btn-secondary me-2" @click.prevent="goToPagesList">
+          Cancel
+        </button>
+        <button class="btn btn-danger me-2" @click.prevent="deletePage">
+          Delete
+        </button>
       </div>
     </form>
   </div>
@@ -55,7 +60,7 @@ const router = useRouter();
 const pages = inject("$pages");
 const bus = inject("$bus");
 
-const { index } = defineProps(["index"]);
+const {index} = defineProps(["index"]);
 
 let page = pages.getSinglePage(index);
 
@@ -64,8 +69,15 @@ function submit() {
 
   bus.$emit("page-updated", {
     index,
-    page,
+    page
   });
+  goToPagesList();
+}
+
+function deletePage() {
+  pages.removePage(index);
+  bus.$emit("page-delete", { index });
+
   goToPagesList();
 }
 

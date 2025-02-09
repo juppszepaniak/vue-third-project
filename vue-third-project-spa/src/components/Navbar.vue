@@ -19,7 +19,7 @@
             class="nav-link"
             active-class="active"
             aria-current="page"
-            >Pages</router-link
+            >Page Management</router-link
           >
         </li>
       </ul>
@@ -49,8 +49,11 @@ export default {
       this.pages = [...this.$pages.getAllPages()]; // ... - spread, otherwise pages arr never changes - NOT WORKING?!
     });
 
-    
     this.$bus.$on("page-create", () => {
+      this.pages = [...this.$pages.getAllPages()];
+    });
+
+    this.$bus.$on("page-deleted", () => {
       this.pages = [...this.$pages.getAllPages()];
     });
   },
