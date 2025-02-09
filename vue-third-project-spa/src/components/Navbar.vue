@@ -46,15 +46,16 @@ export default {
     this.pages = this.$pages.getAllPages();
 
     this.$bus.$on("page-updated", () => {
-      this.pages = [...this.$pages.getAllPages()]; // ... - spread, otherwise pages arr never changes - NOT WORKING?!
+      this.pages = this.$pages.getAllPages(); // ... - spread, otherwise pages arr never changes - NOT WORKING?!
+      this.$forceUpdate();
     });
 
     this.$bus.$on("page-create", () => {
-      this.pages = [...this.$pages.getAllPages()];
+      this.pages = this.$pages.getAllPages();
     });
 
     this.$bus.$on("page-deleted", () => {
-      this.pages = [...this.$pages.getAllPages()];
+      this.pages = this.$pages.getAllPages();
     });
   },
   computed: {
